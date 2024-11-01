@@ -1,14 +1,16 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+
 import { Tabs } from 'expo-router';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from './../../constants/Colors';
 
 export default function TabLayout() {
     return (
-        <Tabs screenOptions={{ headerShown: false, tabBarActiveTintColor: Colors.dark.icon }}>
+        <Tabs screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: Colors.dark.icon
+        }}>
             <Tabs.Screen
-                name="home"
+                name="index"
                 options={{
                     title: "Home",
                     tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />
@@ -29,5 +31,5 @@ export default function TabLayout() {
                 }}
             />
         </Tabs>
-    )
+    );
 }

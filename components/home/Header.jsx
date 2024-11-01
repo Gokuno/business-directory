@@ -1,10 +1,22 @@
 // components/home/Header.jsx
 import React from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { useLocation } from '@/hooks/useLocation';
 
 export default function Header() {
+    const { address, loading, errorMsg, updateLocation } = useLocation();
+
+    const getFormattedAddress = () => {
+        if (loading) return 'Getting location...';
+        if (errorMsg) return 'Location unavailable';
+        if (address) {
+            return `${address.city || address.subregion || ''}, ${address.region || ''}`;
+        }
+        return 'Location unavailable';
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.topSection}>
@@ -12,7 +24,7 @@ export default function Header() {
                     <Text style={styles.welcomeText}>Welcome!</Text>
                     <Text style={styles.locationText}>
                         <AntDesign name="enviromento" size={18} color={Colors.dark.text} />{' '}
-                        Hermosillo, Son
+                        {getFormattedAddress()}
                     </Text>
                 </View>
                 <View style={styles.avatarContainer}>
@@ -34,8 +46,11 @@ export default function Header() {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        paddingTop: 40,
         backgroundColor: Colors.light.tint,
-        width: '100%'
+        width: '100%',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20
     },
     topSection: {
         flexDirection: 'row',

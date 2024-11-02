@@ -1,22 +1,47 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { View, Text, Image, StyleSheet } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import { router } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser'
+import { Button } from './../../components/Button';
+import { useWarmUpBrowser } from './../../hooks/useWarmUpBrowser';
+import { useOAuth } from '@clerk/clerk-expo';
+import * as Linking from 'expo-linking';
+
+
+WebBrowser.maybeCompleteAuthSession()
 
 export default function LoginScreen() {
-    const handlePress = () => {
-        router.replace('/(tabs)/'); // Updated navigation path
-    };
+    useWarmUpBrowser();
+
+    const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' })
+
+    const onPress = React.useCallback(async () => {
+        try {
+            const { createdSessionId, signIn, signUp, setActive } = await startOAuthFlow({
+                redirectUrl: Linking.createURL('/(tabs)', { scheme: 'myapp' }),
+            })
+
+            if (createdSessionId) {
+                setActive({ session: createdSessionId })
+            } else {
+                // Use signIn or signUp for next steps such as MFA
+            }
+        } catch (err) {
+            console.error('OAuth error', err)
+        }
+    }, [])
+
 
     return (
-        <View>
+        <View style={{ backgroundColor: "#fff" }}>
             <View style={{
                 display: "flex",
                 alignItems: "center",
                 marginTop: 100
             }}>
                 <Image
-                    source={require("./../assets/images/login.png")}
+                    source={require("./../../assets/images/login.png")}
                     style={{
                         width: 200,
                         height: 400,
@@ -43,20 +68,10 @@ export default function LoginScreen() {
                     marginVertical: 10,
                     color: Colors.light.icon
                 }}>
-                    Find a the business you are looking for and post your own business
+                    Find the business you are looking for and post your own business
                 </Text>
 
-                <TouchableOpacity
-                    style={styles.btn}
-                    onPress={handlePress}
-                >
-                    <Text style={{
-                        textAlign: "center",
-                        color: "#fff",
-                        fontSize: 20,
-                        fontFamily: "tinos-bold"
-                    }}>Get Started Now</Text>
-                </TouchableOpacity>
+                <Button icon="logo-google" title="Continue with Google" onPress={onPress} />
             </View>
         </View>
     );
@@ -67,11 +82,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         padding: 20,
         marginTop: -20
-    },
-    btn: {
-        backgroundColor: Colors.light.tint,
-        padding: 14,
-        borderRadius: 99,
-        marginTop: 20
     }
 });

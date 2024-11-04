@@ -24,7 +24,7 @@ export default function Header() {
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <View>
-                    <Text style={styles.welcomeText}>Welcome <Text>{user?.fullName}</Text></Text>
+                    <Text style={styles.welcomeText}>Bienvenido <Text>{user?.fullName}</Text></Text>
                     <Text style={styles.locationText}>
                         <AntDesign name="enviromento" size={18} color={Colors.dark.text} />{' '}
                         {getFormattedAddress()}
@@ -43,7 +43,7 @@ export default function Header() {
             <View style={styles.searchContainer}>
                 <AntDesign name="search1" size={20} color={Colors.light.icon} />
                 <TextInput
-                    placeholder="Search businesses..."
+                    placeholder="Buscar negocio..."
                     style={styles.searchInput}
                     placeholderTextColor={Colors.light.icon}
                 />

@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Colors } from '@/constants/Colors';
 import { collection, getDocs, query } from 'firebase/firestore';
@@ -9,6 +9,8 @@ import { db } from '@/configs/FirebaseConfig';
 
 export default function Category() {
     const [categoryList, setCategoryList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
 
     useEffect(() => {
         getCategoryList();
@@ -16,25 +18,42 @@ export default function Category() {
 
     const getCategoryList = async () => {
         try {
+            setIsLoading(true);
             const q = query(collection(db, "Category"));
             const querySnapshot = await getDocs(q);
 
             const categoryList = [];
+            // Add debug logging to check for duplicate IDs
+            const seenIds = new Set();
+
             querySnapshot.forEach((doc) => {
-                // Include the document ID as a unique identifier
+                const docId = doc.id;
+                if (seenIds.has(docId)) {
+                    console.warn(`Duplicate document ID found: ${docId}`);
+                }
+                seenIds.add(docId);
+
                 categoryList.push({
-                    id: doc.id, // Use Firestore's document ID
+                    id: docId,
                     ...doc.data()
                 });
             });
 
-            setCategoryList(categoryList);
+            // Ensure no duplicate IDs in final list
+            const uniqueCategories = categoryList.filter((category, index, self) =>
+                index === self.findIndex((c) => c.id === category.id)
+            );
+
+            setCategoryList(uniqueCategories);
         } catch (error) {
             console.error('Error fetching category:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const renderItem = ({ item }) => (
+    // Fixed renderItem to properly destructure index
+    const renderItem = ({ item, index }) => (
         <TouchableOpacity
             style={styles.categoryItem}
             onPress={() => console.log('Category pressed:', item.name)}
@@ -48,7 +67,7 @@ export default function Category() {
             </View>
             <Text style={styles.categoryName}>{item.name}</Text>
         </TouchableOpacity>
-    )
+    );
 
     return (
         <View>
@@ -69,15 +88,19 @@ export default function Category() {
                 </Text>
                 <Text style={{ color: Colors.light.tint }}>Ver todas</Text>
             </View>
+            {isLoading ? (
+                <ActivityIndicator size="small" color="#0005" />
+            ) : (
+                <FlatList
+                    data={categoryList}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => `${item.id}-${index}`}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.listContainer}
+                />
+            )}
 
-            <FlatList
-                data={categoryList}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.listContainer}
-            />
         </View>
     )
 }

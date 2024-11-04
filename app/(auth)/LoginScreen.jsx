@@ -57,9 +57,9 @@ export default function LoginScreen() {
                     fontFamily: "tinos-bold",
                     textAlign: "center"
                 }}>
-                    Your <Text style={{
+                    Plataforma <Text style={{
                         color: Colors.light.tint
-                    }}>Business Directory</Text> Platform
+                    }}>Negocios</Text> Locales
                 </Text>
                 <Text style={{
                     fontSize: 18,
@@ -68,10 +68,10 @@ export default function LoginScreen() {
                     marginVertical: 10,
                     color: Colors.light.icon
                 }}>
-                    Find the business you are looking for and post your own business
+                    Encuentra el negocio que buscas o integra tu negocio.
                 </Text>
 
-                <Button icon="logo-google" title="Continue with Google" onPress={onPress} />
+                <Button icon="logo-google" title="Continua con Google" onPress={onPress} />
             </View>
         </View>
     );

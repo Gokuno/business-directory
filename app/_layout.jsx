@@ -29,11 +29,12 @@ const tokenCache = {
 
 
 export default function RootLayout() {
-    const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
-    if (!publishableKey) {
-        throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env');
-    }
+    //const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+    //if (!publishableKey) {
+    //    throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env');
+    //}
 
     const [fontsLoaded] = useFonts({
         "tinos": require("./../assets/fonts/Tinos-Regular.ttf"),
@@ -42,7 +43,7 @@ export default function RootLayout() {
     });
 
     return (
-        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <ClerkProvider publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY} tokenCache={tokenCache}>
             <ClerkLoaded>
                 <SignedIn>
                     <Stack screenOptions={{ headerShown: false }}>

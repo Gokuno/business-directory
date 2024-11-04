@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import Header from '@/components/home/Header';
+import Slider from '@/components/home/Slider';
+import Category from '@/components/home/Category';
 
 export default function HomeScreen() {
     return (
@@ -9,8 +11,9 @@ export default function HomeScreen() {
                 {/* Header */}
                 <Header />
                 {/* Slider */}
-
+                <Slider />
                 {/* Category */}
+                <Category />
 
                 {/* Popular Business List */}
             </ScrollView>

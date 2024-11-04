@@ -1,11 +1,14 @@
 // components/home/Header.jsx
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useLocation } from '@/hooks/useLocation';
+import { useUser } from '@clerk/clerk-expo';
 
 export default function Header() {
+    const { user } = useUser();
+
     const { address, loading, errorMsg, updateLocation } = useLocation();
 
     const getFormattedAddress = () => {
@@ -21,14 +24,20 @@ export default function Header() {
         <View style={styles.container}>
             <View style={styles.topSection}>
                 <View>
-                    <Text style={styles.welcomeText}>Welcome!</Text>
+                    <Text style={styles.welcomeText}>Welcome <Text>{user?.fullName}</Text></Text>
                     <Text style={styles.locationText}>
                         <AntDesign name="enviromento" size={18} color={Colors.dark.text} />{' '}
                         {getFormattedAddress()}
                     </Text>
                 </View>
                 <View style={styles.avatarContainer}>
-                    <AntDesign name="user" size={24} color={Colors.light.text} />
+                    <Image source={{ uri: user?.imageUrl }}
+                        style={{
+                            width: 45,
+                            height: 45,
+                            borderRadius: 99
+                        }}
+                    />
                 </View>
             </View>
             <View style={styles.searchContainer}>
@@ -65,7 +74,7 @@ const styles = StyleSheet.create({
     },
     locationText: {
         fontFamily: 'tinos',
-        fontSize: 16,
+        fontSize: 18,
         color: Colors.light.tabIconDefault,
         marginTop: 5,
     },

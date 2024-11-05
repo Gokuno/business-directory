@@ -55,7 +55,7 @@ export default function Header() {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
-        paddingTop: 40,
+        paddingTop: 20,
         backgroundColor: Colors.light.tint,
         width: '100%',
         borderBottomLeftRadius: 20,
@@ -68,12 +68,11 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     welcomeText: {
-        fontFamily: 'tinos-bold',
+        fontWeight: 'bold',
         fontSize: 24,
         color: Colors.dark.text
     },
     locationText: {
-        fontFamily: 'tinos',
         fontSize: 18,
         color: Colors.light.tabIconDefault,
         marginTop: 5,
@@ -97,6 +96,5 @@ const styles = StyleSheet.create({
     searchInput: {
         marginLeft: 10,
         flex: 1,
-        fontFamily: 'tinos'
     }
 });

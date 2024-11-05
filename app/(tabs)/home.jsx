@@ -3,6 +3,7 @@ import { View, ScrollView, StyleSheet } from 'react-native';
 import Header from '@/components/home/Header';
 import Slider from '@/components/home/Slider';
 import Category from '@/components/home/Category';
+import PopularBusiness from '@/components/home/PopularBusiness';
 
 export default function HomeScreen() {
     return (
@@ -14,8 +15,12 @@ export default function HomeScreen() {
                 <Slider />
                 {/* Category */}
                 <Category />
-
                 {/* Popular Business List */}
+                <PopularBusiness />
+
+                <View style={{ height: 50 }}>
+
+                </View>
             </ScrollView>
         </View>
     );

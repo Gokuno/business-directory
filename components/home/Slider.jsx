@@ -50,10 +50,10 @@ export default function Slider() {
         <View>
             <Text style={{
                 fontWeight: 'bold',
-                fontSize: 20,
+                fontSize: 18,
                 paddingLeft: 20,
                 paddingTop: 20,
-                marginBottom: 5
+                marginBottom: 15
             }}>
                 Promocionales del mes
             </Text>
@@ -83,7 +83,7 @@ const styles = {
         fontSize: 20,
         paddingLeft: 20,
         paddingTop: 20,
-        marginBottom: 5
+        marginBottom: 20
     },
     listContainer: {
         paddingHorizontal: 20

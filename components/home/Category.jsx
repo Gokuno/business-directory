@@ -58,12 +58,21 @@ export default function Category() {
             style={styles.categoryItem}
             onPress={() => console.log('Category pressed:', item.name)}
         >
-            <View style={styles.imageContainer}>
-                <Image
-                    source={{ uri: item.icon }}
-                    style={styles.categoryImage}
-                    resizeMode="cover"
-                />
+            <View style={{
+                width: 60,
+                height: 60,
+                backgroundColor: '#fff',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: 99
+            }}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={{ uri: item.icon }}
+                        style={styles.categoryImage}
+                        resizeMode="cover"
+                    />
+                </View>
             </View>
             <Text style={styles.categoryName}>{item.name}</Text>
         </TouchableOpacity>
@@ -77,11 +86,10 @@ export default function Category() {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                marginTop: 10,
-                marginBottom: 10
+                marginTop: 2,
             }}>
                 <Text style={{
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: 'bold',
                 }}>
                     Categorias
@@ -127,11 +135,12 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         overflow: 'hidden',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#fff',
     },
     categoryImage: {
         width: '100%',
         height: '100%',
+        backgroundColor: '#fff',
     },
     categoryName: {
         marginTop: 5,

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Colors } from '@/constants/Colors';
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '@/configs/FirebaseConfig';
+import { useRouter } from 'expo-router';
 
 
 
@@ -10,6 +11,7 @@ import { db } from '@/configs/FirebaseConfig';
 export default function Category() {
     const [categoryList, setCategoryList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -52,11 +54,15 @@ export default function Category() {
         }
     };
 
+    const handleCategoryPress = (category) => {
+        router.push(`/business/${encodeURIComponent(category.name)}`);
+    };
+
     // Fixed renderItem to properly destructure index
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
             style={styles.categoryItem}
-            onPress={() => console.log('Category pressed:', item.name)}
+            onPress={() => handleCategoryPress(item)}
         >
             <View style={{
                 width: 60,
@@ -102,7 +108,7 @@ export default function Category() {
                 <FlatList
                     data={categoryList}
                     renderItem={renderItem}
-                    keyExtractor={(item, index) => `${item.id}-${index}`}
+                    keyExtractor={(item) => item.id}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={styles.listContainer}

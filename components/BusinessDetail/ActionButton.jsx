@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, TouchableOpacity, Linking } from 'react-native'
+import { View, Text, FlatList, Image, TouchableOpacity, Linking, Share } from 'react-native'
 import React from 'react'
 
 
@@ -31,8 +31,11 @@ export default function ActionButton({business}) {
     ]
 
     const OnPressHandle = (item) => {
-        if (item.name == 'compartir') 
+        if (item.name == 'Compartir') 
         {
+            Share.share({
+                message: business?.nombre + "\n Direccion: " + business.direccion + "\n Mas detalles en la App de Directory de Negocios Locales, por Jorge Allan Paz. " + "\n Link: " + "https://allan-portafolio.vercel.app/"
+            })
             return;
         }
         Linking.openURL(item.url);

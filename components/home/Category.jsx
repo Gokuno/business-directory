@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 
 
 
-export default function Category() {
+export default function Category({explore = false, onCategorySelect}) {
     const [categoryList, setCategoryList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
@@ -55,14 +55,19 @@ export default function Category() {
     };
 
     const handleCategoryPress = (category) => {
-        router.push(`/business/${encodeURIComponent(category.name)}`);
+        if (!explore) {
+            router.push(`/business/${encodeURIComponent(category.name)}`);
+        } else {
+            onCategorySelect(category.name)
+        }
+        
     };
 
     // Fixed renderItem to properly destructure index
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
             style={styles.categoryItem}
-            onPress={() => handleCategoryPress(item)}
+            onPress={(category) => handleCategoryPress(item)}
         >
             <View style={{
                 width: 60,
@@ -86,6 +91,7 @@ export default function Category() {
 
     return (
         <View>
+            {!explore &&
             <View style={{
                 padding: 20,
                 display: 'flex',
@@ -101,7 +107,7 @@ export default function Category() {
                     Categorias
                 </Text>
                 <Text style={{ color: Colors.light.tint }}>Ver todas</Text>
-            </View>
+            </View>}
             {isLoading ? (
                 <ActivityIndicator size="small" color="#0005" />
             ) : (
@@ -138,8 +144,8 @@ const styles = StyleSheet.create({
         width: 100,
     },
     imageContainer: {
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         overflow: 'hidden',
         backgroundColor: '#fff',
     },
@@ -152,5 +158,6 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 12,
         textAlign: 'center',
+        marginBottom: 10
     }
 });

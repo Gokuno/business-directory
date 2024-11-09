@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { Colors } from '@/constants/Colors';
 import { collection, getDocs, limit, query } from 'firebase/firestore';
 import { db } from '@/configs/FirebaseConfig';
+import { useRouter } from 'expo-router';
 
 export default function PopularBusiness() {
     const [businessList, setBusinessList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     // Add error state if you want to handle errors
     const [error, setError] = useState(null);
+
+    const router = useRouter();
 
     // Properly declare the function using const
     const getBusinessList = async () => {
@@ -52,14 +55,7 @@ export default function PopularBusiness() {
 
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            onPress={() => {
-                // Add null check for item
-                if (item && item.nombre) {
-                    console.log('BusinessList pressed:', item.nombre);
-                } else {
-                    console.log('Item or item name is undefined:', item);
-                }
-            }}
+            onPress={() => router.push('/businessdetail/' + item?.id)}
         >
             <View style={{
                 marginLeft: 20,
@@ -120,7 +116,6 @@ export default function PopularBusiness() {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'baseline',
-                marginTop: 2,
             }}>
                 <Text style={{
                     fontSize: 18,

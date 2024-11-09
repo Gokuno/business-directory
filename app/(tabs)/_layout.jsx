@@ -25,21 +25,21 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="home"
                 options={{
-                    title: "Home",
+                    title: "Inicio",
                     tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={color} />
                 }}
             />
             <Tabs.Screen
                 name="explore"
                 options={{
-                    title: "Explore",
+                    title: "Explorar",
                     tabBarIcon: ({ color }) => <AntDesign name="search1" size={24} color={color} />
                 }}
             />
             <Tabs.Screen
                 name="profile"
                 options={{
-                    title: "Profile",
+                    title: "Perfil",
                     tabBarIcon: ({ color }) => <AntDesign name="profile" size={24} color={color} />
                 }}
             />

@@ -15,7 +15,11 @@
     "plugin": [
       "expo-location",
       {
-        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        "locationAlwaysAndWhenInUsePermission": "Permite a la App accesar a tu ubicacion."
+      },
+      "expo-image-picker",
+      {
+        "photosPermission": "La App accesara tus fotos para que puedas subir la imagen."
       }
     ],
     "ios": {

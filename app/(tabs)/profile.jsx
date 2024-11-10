@@ -18,6 +18,7 @@ export default function ProfileScreen() {
             <UserIntro />
 
             <MenuList />
+            
         </View>
     );
 }
